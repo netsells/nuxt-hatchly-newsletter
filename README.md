@@ -40,18 +40,46 @@ The options object can contain the following values:
 
 ```js
 {
-    apiBase: '',
+    baseURL: '',
+    browserBaseURL: '',
 },
 ```
 
 Each option is described below.
 
-### `apiBase`
+### `baseURL`
 
-> The url of your Hatchly site. This is should be updated in your .env rather than hardcoding a value here.
+> The url of your Hatchly site. If `browserBaseURL` is not provided this url will be used for both server side and client side fetching.
 
-- Default: `process.env.API_BASE`
+- Default: `process.env.API_URL`
 - Type: `string`
+
+### `browserBaseURL`
+
+> The public url of your Hatchly site. 
+
+- Default: `process.env.API_URL_BROWSER`
+- Type: `string`
+
+### Runtime config
+
+If using nuxt runtime config to inject env variables at runtime, each of the above options can be overwritten in both `publicRuntimeConfig` and `privateRuntimeConfig` objects, for example:
+
+```js
+module.exports = {
+    publicRuntimeConfig: {
+        hatchly: {
+            // Inherit options for all hatchly modules
+            baseURL: process.env.API_URL,
+            
+            newsletter: {
+                // Overwrite options for the newsletter module
+                baseURL: process.env.API_URL,
+            },
+        },    
+    },
+};
+```
 
 ## Usage
 
